@@ -1,10 +1,10 @@
-import { useState,useContext } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormInput from '../Form-Input/FormInput'
 import Button from '../Button/Button'
-import { signInWithGooglePopup, createUserDocument, signInUserWithEmailAndPassword } from '../../firebase/firebase'
+import { signInWithGooglePopup, signInUserWithEmailAndPassword } from '../../firebase/firebase'
 import './signin.style.scss'
-import { UserContext } from '../../context/user.context'
+
 
 const defaultUser = {
   email: '',
@@ -15,7 +15,7 @@ const defaultUser = {
 const SignIn = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(defaultUser)
-  const {setCurrentUser} = useContext(UserContext)
+
 
   const resetFormFields = () => { setUser(defaultUser) }
   
@@ -25,9 +25,7 @@ const SignIn = () => {
   }
 
   const logGoogleUser = async () => {
-    const { user } = await signInWithGooglePopup()
-    await createUserDocument(user)
-    setCurrentUser(user)
+   await signInWithGooglePopup() 
     navigate('/')
   }
 
@@ -37,7 +35,6 @@ const SignIn = () => {
     try {
        const {user} =await signInUserWithEmailAndPassword(email, password);
       resetFormFields();
-      setCurrentUser(user)
       navigate('/')
     } catch (error) {
       if (error.code === 'auth/user-not-found') {
