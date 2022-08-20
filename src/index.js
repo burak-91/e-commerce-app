@@ -4,7 +4,8 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './context/user.context';
 import { ProductProvider } from './context/product.context';
-import { CartDropdownProvider } from './context/cartdropdown.context';
+import { CartProvider } from './context/cart.context';
+
 import './index.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -13,9 +14,9 @@ root.render(
     <BrowserRouter>
       <UserProvider>
         <ProductProvider>
-          <CartDropdownProvider>
-             <App />
-          </CartDropdownProvider>
+          <CartProvider>
+              <App />
+          </CartProvider>
         </ProductProvider>
       </UserProvider>
     </BrowserRouter>
