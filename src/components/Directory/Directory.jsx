@@ -1,6 +1,6 @@
 import React from 'react'
-import Category from './Category/Category'
-import './categories.style.scss'
+import DirectoryItem from './DirectoryItem/DirectoryItem'
+import './directory.style.scss'
 
 const categories = [
   {
@@ -32,14 +32,14 @@ const categories = [
 
 
 
-const Categories = () => {
+const Directory = () => {
   return (
     <div className='categories-container'>
       {categories.map(category => (
-         <Category key={category.id} category={category}  />
+         <DirectoryItem key={category.id} category={category}  />
       ))}  
     </div>
   )
 }
 
-export default Categories
+export default Directory

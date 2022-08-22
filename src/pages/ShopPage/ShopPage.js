@@ -1,21 +1,14 @@
-import React,{useContext} from 'react'
-import Navbar from '../../components/Navbar/Navbar'
-import Shop from '../../components/Shop/Shop'
-import './shopPage.style.scss'
-import {ProductContext} from '../../context/product.context'
+import { Routes, Route } from 'react-router-dom';
+import CategoryPreviewPage from '../CategoryPreviewPage/CategoryPreviewPage';
+import Category from '../Category/Category';
 
 const ShopPage = () => {
-    const {products} = useContext(ProductContext)
   return (
-    <div>
-        <Navbar />
-        <div className='products-container'>
-        {products.map((product) =>{
-          return  <Shop key={product.id} {...product}/>
-       })}
-        </div> 
-    </div>
-  )
-}
+    <Routes>
+      <Route index element={<CategoryPreviewPage />} />
+      <Route path=':category' element={<Category />} />
+    </Routes>
+  );
+};
 
-export default ShopPage
+export default ShopPage;

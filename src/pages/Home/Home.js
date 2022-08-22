@@ -1,12 +1,12 @@
 import React from 'react'
-import Categories from '../../components/Categories/Categories'
+import Directory from '../../components/Directory/Directory'
 import Navbar from '../../components/Navbar/Navbar'
 
 const Home = () => {
   return (
     <div>
         <Navbar />
-        <Categories />
+        <Directory />
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore, doc, getDoc, setDoc,  collection, writeBatch, query, getDocs } from "firebase/firestore";
 import { 
     getAuth, 
     signInWithRedirect, 
@@ -7,9 +8,9 @@ import {
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword,
     signOut,
-    onAuthStateChanged
+    onAuthStateChanged,
 } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyAXCEGk5SeWGRvGsAvJpR3m0gOb1NiGqC4",
@@ -82,3 +83,29 @@ export const signOutUser = async () => {
 export const onAuthStateChangedListener = async (callback) => {
     return await onAuthStateChanged(auth,callback);
 }
+
+// Add Collection
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(database, collectionKey);
+    const batch = writeBatch(database);
+    objectsToAdd.forEach(obj => {
+        const newDocRef = doc(collectionRef, obj.title.toLowerCase());
+        batch.set(newDocRef, obj);
+    } );
+    return await batch.commit();
+}
+
+// Get Collection from Firebase
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(database, 'categories');
+    const q = query(collectionRef);
+  
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+      const { title, items } = docSnapshot.data();
+      acc[title.toLowerCase()] = items;
+      return acc;
+    }, {});
+  
+    return categoryMap;
+  };
