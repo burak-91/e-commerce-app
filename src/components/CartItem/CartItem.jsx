@@ -1,6 +1,6 @@
 import React,{useContext} from 'react'
 import { CartContext } from '../../context/cart.context'
-import './cartItem.style.scss'
+import {CartItemContainer, Imag, ItemDetails, Span} from './cartItem.style.js'
 
 
 const CartItem = () => {
@@ -9,13 +9,13 @@ const CartItem = () => {
   return (
     <>
         {cartItems.map(cartItem => (
-            <div key={cartItem.id} className='cart-item-container'>
-                <img src={cartItem.imageUrl} alt={`${cartItem.name}`} />
-                <div className='item-details'>
-                    <span className='name'>{cartItem.name}</span>
-                    <span className='price'>{cartItem.quantity} x ${cartItem.price}</span>
-                </div>
-            </div>
+            <CartItemContainer key={cartItem.id}>
+                <Imag src={cartItem.imageUrl} alt={`${cartItem.name}`} />
+                <ItemDetails>
+                    <Span>{cartItem.name}</Span>
+                    <Span>{cartItem.quantity} x ${cartItem.price}</Span>
+                </ItemDetails>
+            </CartItemContainer>
         ))}
     </>
   )

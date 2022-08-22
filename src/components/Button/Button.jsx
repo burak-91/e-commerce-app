@@ -1,8 +1,9 @@
 import React from 'react'
-import './button.style.scss'
-const Button = ({content,buttonType,...otherProps}) => {
+import {BaseButton} from './button.style.js'
+const Button = ({content,...otherProps}) => {
+
   return (
-    <button className={`button-container ${buttonType}`} {...otherProps}>{content}</button>
+    <BaseButton {...otherProps}>{content}</BaseButton>
   )
 }
 

@@ -1,5 +1,5 @@
 import React,{useContext} from 'react'
-import './checkOutPage.style.scss'
+import {CheckoutContainer, CheckoutHeader, HeaderBlock, Total} from './checkOutPage.style.js'
 import Navbar from '../../components/Navbar/Navbar'
 import Checkout from '../../components/Checkout/Checkout'
 import {CartContext} from '../../context/cart.context'
@@ -11,30 +11,30 @@ const CheckOutPage = () => {
   return (
     <>
         <Navbar />
-        <div className="checkout-container">
-            <div className='checkout-header'>
-                <div className='header-block'>
+        <CheckoutContainer className="checkout-container">
+            <CheckoutHeader className='checkout-header'>
+                <HeaderBlock className='header-block'>
                     <span>Product</span>
-                </div>
-                <div className='header-block'>
+                </HeaderBlock>
+                <HeaderBlock className='header-block'>
                     <span>Description</span>
-                </div>
-                <div className='header-block'>
+                </HeaderBlock>
+                <HeaderBlock className='header-block'>
                     <span>Quantity</span>
-                </div>
-                <div className='header-block'>
+                </HeaderBlock>
+                <HeaderBlock className='header-block'>
                     <span>Price</span>
-                </div>
-                <div className='header-block'>
+                </HeaderBlock>
+                <HeaderBlock className='header-block'>
                     <span>Remove</span>
-                </div>
-            </div>
+                </HeaderBlock>
+            </CheckoutHeader>
             <div className='header-block'/>
             {cartItems.map(product => (
                 <Checkout key={product.id} product={product} />
             ))}
-            <span className='total'>Total: ${totalPrice}</span>
-        </div>
+            <Total>Total: ${totalPrice}</Total>
+        </CheckoutContainer>
         
     </>
   )

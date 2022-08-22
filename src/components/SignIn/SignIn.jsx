@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import FormInput from '../Form-Input/FormInput'
 import Button from '../Button/Button'
 import { signInWithGooglePopup, signInUserWithEmailAndPassword } from '../../firebase/firebase'
-import './signin.style.scss'
+import {SignInContainer, ButtonsContainer} from './signin.style.js'
 
 
 const defaultUser = {
@@ -49,20 +49,20 @@ const SignIn = () => {
 
 
   return (
-    <div className='sign-up-container'>
+    <SignInContainer>
       <h2>Already have an account</h2>
       <span>Sign In with Email,Password or Google</span>
-      <form className="sign-in-form" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <FormInput type="email" name="email" value={user.email} label="Email" required onChange={handleChange} />
         <FormInput type="password" name="password" value={user.password} label="Password" required onChange={handleChange} />
-        <div className="buttons-container">
+        <ButtonsContainer>
           <Button type='submit' content='Sign In' />
-          <Button type='button' content='Google Sign In' buttonType='google-sign-in' onClick={logGoogleUser} />
-        </div>
+          <Button type='button' content='Google Sign In' google onClick={logGoogleUser} />
+        </ButtonsContainer>
       </form>
 
 
-    </div>
+    </SignInContainer>
   )
 }
 

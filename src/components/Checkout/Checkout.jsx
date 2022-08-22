@@ -1,6 +1,5 @@
 import React,{useContext} from 'react'
-import  './checkout.style.scss'
-//import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {CheckoutItemContainer, ImageContainer, Img, Span, Arrow, RemoveButton} from  './checkout.style.js'
 import {CartContext} from '../../context/cart.context'
 
 
@@ -19,19 +18,19 @@ const Checkout = (product) => {
       addItemToCart(product.product);
   }
   return (
-    <div className='checkout-item-container'>
-      <div className='image-container'>
-        <img src={imageUrl} alt='product' />
-      </div>
-      <span className='name'>{name}</span>
-      <span className='quantity'>
-        <div className='arrow' onClick={removeItemHandler}>&#10094;</div>
-        <span className='value'>{quantity}</span>
-        <div className='arrow' onClick={addItemHandler}>&#10095;</div>
-      </span>
-      <span className='price'>{price}</span>
-      <div className='remove-button' onClick={removeAllHandler}>&#10005;</div>
-    </div>
+    <CheckoutItemContainer>
+      <ImageContainer>
+        <Img src={imageUrl} alt='product' />
+      </ImageContainer>
+      <Span name>{name}</Span>
+      <Span quantity>
+        <Arrow  onClick={removeItemHandler}>&#10094;</Arrow>
+        <Span value>{quantity}</Span>
+        <Arrow onClick={addItemHandler}>&#10095;</Arrow>
+      </Span>
+      <Span price>{price}</Span>
+      <RemoveButton  onClick={removeAllHandler}>&#10005;</RemoveButton>
+    </CheckoutItemContainer>
   )
 }
 
