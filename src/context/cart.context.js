@@ -1,4 +1,18 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useReducer } from "react";
+
+
+
+export const CartContext = createContext({
+    isCartDropdownOpen: false,
+    setCartDropdown: () => {},
+    cartItems: [],
+    addItemToCart: () => {},
+    removeItemFromCart: () => {},
+    removeByChoosing: () => {},
+    totalQuantity: 0,
+    totalPrice:0
+});
+
 
 const addToCartIfNotExists = (cartItems, newProduct) => {
     const existingProduct = cartItems.find(
@@ -30,42 +44,66 @@ const removeFromCart = (cartItems, productToRemove) => {
     );
 }
 
-export const CartContext = createContext({
-    isCartDropdownOpen: false,
-    setCartDropdown: () => {},
+export const actionType = {
+    SET_CART_DROPDOWN: 'SET_CART_DROPDOWN',
+    SET_CART_ITEMS: 'SET_CART_ITEMS',
+}
+
+const cartReducer = (state,action) =>{
+    const { type , payload } =action
+    switch (type) {
+        case actionType.SET_CART_DROPDOWN:
+            return {...state,isCartDropdownOpen:payload}
+        case actionType.SET_CART_ITEMS:
+            return {...state,...payload}
+        default:
+            throw new Error(`Unhandled error ${type} in the cartReducer`)
+    }
+}
+const INITIAL_STATE= {
+    isCartDropdownOpen:false,
     cartItems: [],
-    addItemToCart: () => {},
-    removeItemFromCart: () => {},
-    removeByChoosing: () => {},
-});
+    totalQuantity: 0,
+    totalPrice:0
+}
 
 export const CartProvider = ({ children }) => {
-    const [isCartDropdownOpen, setCartDropdownOpen] = useState(false);
-    const [cartItems, setCartItems] = useState([]);
-    const [totalQuantity, setTotalQuantity] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [state,dispatch] = useReducer(cartReducer,INITIAL_STATE)
+    const {isCartDropdownOpen,cartItems,totalQuantity,totalPrice} = state
 
     const addItemToCart = (newProduct) => {
-        setCartItems(addToCartIfNotExists(cartItems, newProduct));
+         const newCartItem =  addToCartIfNotExists(cartItems, newProduct)
+         updateCartItems(newCartItem)
     }
     const removeItemFromCart = (cartItemToRemove) => {
-        setCartItems(removeFromCart(cartItems, cartItemToRemove));
+        const newCartItem = removeFromCart(cartItems, cartItemToRemove)
+        updateCartItems(newCartItem)
     }
     const removeByChoosing = (cartItemToRemove) => {
-        setCartItems(cartItems.filter((product) => product.id !== cartItemToRemove.id));
+       const newCartItem = cartItems.filter((product) => product.id !== cartItemToRemove.id)
+       updateCartItems(newCartItem)
     }
 
-    useEffect(() => {
-        setTotalQuantity(cartItems.reduce((total, item) => total +  item.quantity, 0));
-        const calculateTotalPrice = () =>setTotalPrice(cartItems.reduce((total, item) => total +  item.quantity * item.price, 0)) 
-        calculateTotalPrice()
-    },[cartItems]);
+    // For reducer update cart function
+    const updateCartItems = (newCartItem) =>{
+        const newCartQuantity = newCartItem.reduce((total, item) => total +  item.quantity, 0)
+        const newCartPrice = newCartItem.reduce((total, item) => total +  item.quantity * item.price, 0)
+        
+        dispatch({type:actionType.SET_CART_ITEMS,payload:{ cartItems:newCartItem, totalQuantity:newCartQuantity, totalPrice:newCartPrice }})
+    }
+
+
+
+    const handleDropDownDispatch = () =>{
+        dispatch({type:actionType.SET_CART_DROPDOWN, payload:!isCartDropdownOpen})
+    } 
+   
 
     return (
         <CartContext.Provider 
         value={{ 
             isCartDropdownOpen, 
-            setCartDropdownOpen, 
+            handleDropDownDispatch, 
             cartItems, 
             addItemToCart,
             totalQuantity, 
