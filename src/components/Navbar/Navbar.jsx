@@ -1,14 +1,15 @@
 import React,{useContext} from 'react'
+import {useSelector} from 'react-redux'
 import { ReactComponent as Logo} from '../../assets/crown.svg'
 import {Navigation, LogoContainer, NavLinksContainer, NavLink} from './navbar.style.js'
-import { UserContext } from '../../context/user.context'
 import { CartContext } from '../../context/cart.context'
 import { signOutUser } from '../../firebase/firebase'
 import CartIcon from '../Cart-Icon/CartIcon'
 import CartDropdown from '../Cart-Dropdown/CartDropdown'
+import {selectCurrentUser} from '../../store/user/userSelector'
 
 const Navbar = () => {
-  const {currentUser} = useContext(UserContext)
+  const currentUser = useSelector(selectCurrentUser)
   const {isCartDropdownOpen} = useContext(CartContext)
 
   const handleSignOut = async () => {

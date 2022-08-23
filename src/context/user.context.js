@@ -1,5 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
-import { onAuthStateChangedListener, createUserDocument } from '../firebase/firebase';
+import { createContext, useReducer } from "react";
 
 export const UserContext = createContext({
     currentUser: null,
@@ -37,18 +36,7 @@ export const UserProvider = ({children}) =>{
         dispatch({type: actionType.SET_CURRENT_USER, payload:user })
     }
     
-    useEffect(() => {
-        const observer = async () =>{
-            const unscubscribe = await onAuthStateChangedListener((user) => {
-                if(user){
-                    createUserDocument(user);
-                }
-                setCurrentUser(user);
-            })
-            return unscubscribe;
-        }
-        observer();
-    },[]);
+   
 
 
     return(
