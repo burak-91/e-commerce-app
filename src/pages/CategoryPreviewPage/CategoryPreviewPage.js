@@ -1,12 +1,13 @@
-import React,{useContext} from 'react'
+import React from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import CategoryPreview from '../../components/Category-Preview/CategoryPreview'
 import './categorypreview.style.scss'
-import {CategoriesContext} from '../../context/categories.context'
+import { useSelector } from 'react-redux';
+import {categorySelector} from '../../store/category/categorySelector'
 
 
 const CategoryPreviewPage = () => {
-    const {categoriesMap} = useContext(CategoriesContext)
+    const categoriesMap = useSelector(categorySelector)
 
   return (
     <>
