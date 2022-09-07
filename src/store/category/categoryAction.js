@@ -1,3 +1,3 @@
 import { actionTypes } from "./actionTypes";
 
-export const setCategoriesMap = (categories) =>({type:actionTypes.SET_CATEGORIES_MAP, payload:categories})
+export const setCategories = (categories) =>({type:actionTypes.SET_CATEGORIES, payload:categories})

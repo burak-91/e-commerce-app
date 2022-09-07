@@ -1,11 +1,11 @@
-import React,{useContext} from 'react'
-import { CartContext } from '../../context/cart.context'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { selectCartItems } from '../../store/cart/cartSelector.js'
 import {CartItemContainer, Imag, ItemDetails, Span} from './cartItem.style.js'
 
 
 const CartItem = () => {
-    const {cartItems} = useContext(CartContext)
-
+    const cartItems = useSelector(selectCartItems)
   return (
     <>
         {cartItems.map(cartItem => (
