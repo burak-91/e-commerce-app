@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import CategoryPreviewPage from '../CategoryPreviewPage/CategoryPreviewPage';
 import Category from '../Category/Category';
 import {useDispatch} from 'react-redux'
-import {fetchCategoriesAsync } from '../../store/category/categoryAction';
+import { fetchCategoriesStart } from '../../store/category/categoryAction';
 
 
 
@@ -11,7 +11,7 @@ const ShopPage = () => {
   const dispatch = useDispatch(); 
 
   useEffect(() => {    
-   dispatch(fetchCategoriesAsync())
+   dispatch(fetchCategoriesStart())
   },[])
 
 
