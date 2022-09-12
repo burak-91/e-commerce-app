@@ -59,7 +59,7 @@ export const createUserDocument = async (userAuth,additionalInformaiton) => {
         }
     }
 
-    return userRef;
+    return snapShot;
 }
 
 //Sign Up with Email and Password
@@ -83,6 +83,19 @@ export const signOutUser = async () => {
 export const onAuthStateChangedListener = async (callback) => {
     return await onAuthStateChanged(auth,callback);
 }
+export const getCurrentUser = () =>{
+    return new Promise((resolve,reject) =>{
+        const unsubscribe = onAuthStateChanged(
+            auth,
+            (userAuth) => {
+                unsubscribe();
+                resolve(userAuth);
+            },
+            reject
+        )
+    })
+}
+
 
 // Add Collection
 export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {

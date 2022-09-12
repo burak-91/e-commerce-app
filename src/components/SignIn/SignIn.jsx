@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormInput from '../Form-Input/FormInput'
 import Button from '../Button/Button'
-import { signInWithGooglePopup, signInUserWithEmailAndPassword } from '../../firebase/firebase'
-import {SignInContainer, ButtonsContainer} from './signin.style.js'
 
+import {SignInContainer, ButtonsContainer} from './signin.style.js'
+import {googleSingInStart, emailSignInStart} from '../../store/user/userActions'
+import { useDispatch } from 'react-redux'
 
 const defaultUser = {
   email: '',
@@ -15,7 +16,7 @@ const defaultUser = {
 const SignIn = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(defaultUser)
-
+  const dispatch = useDispatch();
 
   const resetFormFields = () => { setUser(defaultUser) }
   
@@ -25,7 +26,7 @@ const SignIn = () => {
   }
 
   const logGoogleUser = async () => {
-   await signInWithGooglePopup() 
+    dispatch(googleSingInStart());
     navigate('/')
   }
 
@@ -33,7 +34,7 @@ const SignIn = () => {
     e.preventDefault()
     const { email, password } = user
     try {
-       const {user} =await signInUserWithEmailAndPassword(email, password);
+      dispatch(emailSignInStart(email,password))
       resetFormFields();
       navigate('/')
     } catch (error) {
